@@ -1,42 +1,66 @@
-# My Project Title
+# Analyzing Power Outages
+Project for Dsc 80 at UCSD
 
-by Suraj Rampure (rampure@ucsd.edu)
+By Kevin Zhang
 
-***Note***: If you choose a repo name and title as uninspired as the ones here, I will be quite sad.
+# Introduction
 
----
+This project analyzes a dataset of major power outages in the U.S. from January 2000 to July 2016, accessed from Purdue University's Laboratory for Advancing Sustainable Critical Infrastructure. Major outages, as defined by the Department of Energy, are those affecting at least 50,000 customers or resulting in an unplanned energy demand loss of at least 300 MW. The dataset includes details on outages, geographic and climatic factors, land-use characteristics, electricity consumption patterns, and the economic attributes of affected states.
 
-## Introduction
+The analysis begins with data cleaning and exploratory data analysis to understand the dataset, followed by an investigation of missing data patterns and dependencies. The research focuses on identifying key causes and characteristics of major outages and building a predictive model to determine outage causes based on time and location. Such insights are critical for enabling energy companies to take preventive measures, such as reinforcing infrastructure or improving security.
 
-In this project, we studied the effectiveness of spice challenges in building team morale.
+The original dataset contains 1534 rows (outages) and 57 columns, but this analysis will focus on selected columns relevant to the research objectives.
 
----
+# Data Cleaning and Exploratory Data Analysis
 
-## Cleaning and EDA
+## Cleaning
 
-<iframe src="assets/10-80-enrollment.html" width=800 height=600 frameBorder=0></iframe>
+## Exploratory Data Analysis
 
----
-
-## Assessment of Missingness
-
-Here's what a Markdown table looks like. Note that the code for this table was generated _automatically_ from a DataFrame, using
-
-```py
-print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
-```
-
-| Quarter     |   Count |
-|:------------|--------:|
-| Fall 2020   |       3 |
-| Winter 2021 |       2 |
-| Spring 2021 |       6 |
-| Summer 2021 |       4 |
-| Fall 2021   |      55 |
-
----
-
-## Hypothesis Testing
+### Univariate Analysis
 
 
----
+### Bivariate Analysis
+
+### Grouping and Aggregates
+
+# Assessment of Missingness
+
+## NMAR Analysis
+
+## Missingness Dependency
+
+### 
+
+
+**Null Hypothesis:** 
+
+**Alternate Hypothesis:** 
+
+### 
+
+**Null Hypothesis:** 
+
+**Alternate Hypothesis:**  
+
+# Hypothesis Testing
+
+**Null Hypothesis:** 
+**Alternate Hypothesis:** 
+**Test Statistic:** 
+
+
+# Framing a Prediction Problem
+
+
+# Baseline Model
+
+
+# Final Model
+
+# Fairness Analysis
+
+**Null Hypothesis:** 
+
+**Alternative Hypothesis:** 
+
