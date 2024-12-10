@@ -206,24 +206,74 @@ I graphed the two distributions below.
 
 # Hypothesis Testing
 
-**Null Hypothesis:** 
+I will test whether more customers are affected by power outages during El Niño or La Niña years. The relevant columns for this test are CUSTOMERS.AFFECTED and ANOMALY, where positive ANOMALY values represent El Niño conditions and negative ANOMALY values represent La Niña conditions. I will only be using the outages where CUSTOMERS.AFFECTED is not missing.
 
-**Alternate Hypothesis:** 
+**Null Hypothesis:**  On average, the number of customers affected during El Niño years is the same as during La Niña years.
 
-**Test Statistic:** 
+**Alternate Hypothesis:** On average, more customers are affected during El Niño years than during La Niña years.
+
+**Test Statistic:** Difference in means. Specifically, mean number of customers affected during El Niño years - mean number of customers affected during La Niña years.
+
+I performed a permutation test with 10,000 simulations in order to generate an empirical distribution of the test statistic under the null hypothesis..
+
+<iframe
+  src="assets/el_nino_diffmeans.html.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Using difference in means, I got an observed difference of 17966. This means in our actual dataset, there were around 18,000 more customers affected by outages in El Niño years than La Niña years. However, this has a p value of .235, which results in me failing to reject the null hypothesis, which is on average, the number of customers affected during El Niño years is the same as during La Niña years.
 
 
 # Framing a Prediction Problem
 
+My model aims to predict whether an outage was caused by severe weather. This is a binary classification task, focusing specifically on outages caused by severe weather or other reasons.
+
+I will evaluate my model using the F1 score because it balances precision and recall, making it an ideal metric when dealing with imbalanced classes or when both false positives and false negatives are important to minimize.
 
 # Baseline Model
 
+My model is a binary classifier designed to predict whether a major outage is caused by severe weather or other reason. This information helps companies decide whether to focus resources on improving infrastructure against severe weather. 
+
+The features used in the model are: ANOMALY.LEVEL (quantitative), NERC.REGION (nominal), CUSTOMERS.AFFECTED (quantitative), DEMAND.LOSS.MW (quantitative), CLIMATE.REGION (nominal), TOTAL.CUSTOMERS (quantitative), and OUTAGE.DURATION (quantitative). These features were chosen for the following reasons:
+
+ANOMALY.LEVEL: Indicates climate conditions that may lead to severe weather.
+NERC.REGION: Represents regional energy infrastructure and regulation.
+CUSTOMERS.AFFECTED: Reflects the scale of the outage's impact.
+DEMAND.LOSS.MW: Measures energy loss, which can vary by outage cause.
+CLIMATE.REGION: Provides geographical context tied to weather patterns.
+TOTAL.CUSTOMERS: Indicates the size of the population served in the region.
+OUTAGE.DURATION: Offers insight into the severity and response time of outages.
+
+The target variable was encoded as 1 for severe weather and 0 for other causes.
+
+The model performed well, achieving an F1 score of 0.75 on the test set, highlighting its effectiveness in balancing precision and recall.
 
 # Final Model
 
+For my final model, I switched from Logistic Regression to a Random Forest Classifier. 
+
+Though I incorporated the same features, I also performed additional feature engineering. Specifically, I applied a StandardScaler to OUTAGE.DURATION to normalize its scale, ensuring that the range of values does not disproportionately affect the model. Additionally, I used a QuantileTransformer on DEMAND.LOSS.MW to handle its skewed distribution, making the data more uniform and less sensitive to outliers.
+
+I then used GridSearchCV to find the best hyperparameters for the Random Forest. These were:
+    max_depth= None
+    min_samples_split = 2
+    n_estimators= 50 
+
+I evaluated my model's performance using the F1 score, achieving a value of 0.88. The increase in the F1 score from the baseline to the final model demonstrates improved performance in the final model.
+
+
 # Fairness Analysis
 
-**Null Hypothesis:** 
+My groups for the fairness analysis are high vs low urban population percentages. This is defined as urban population percentages greater than 84.05% vs urban population percentages less than or equal to 84.05%.
 
-**Alternative Hypothesis:** 
+I decided on these groups because urban population percentage could influence the ability to address outages efficiently. Higher urban areas may face more challenges due to population density, while lower urban areas might experience differences in infrastructure or response times. It is important to ensure the model predicts the classification well across these groups to provide equitable insights for energy companies.
 
+My evaluation metric will be the F1 score since the classes (severe weather vs intentional attacks) are imbalanced, and this metric accounts for that imbalance while also incorporating precision and recall. I will use permutation tests to calculate the F1 score for high vs low urban population percentages (randomly shuffled) and then compare this absolute difference to my initial observed absolute difference.
+
+**Null Hypothesis**: The model is fair. Its F1 scores for high and low urban population percentages are roughly the same, and any differences are due to random chance.
+
+**Alternative Hypothesis**: The model is unfair. Its F1 score for high urban population percentages is significantly different from the F1 score for low urban population percentages.
+
+I performed a permutation test with 10,000 trials. My significance level is the standard 0.05, and I got a p-value of 0.8026. Because this is well above the significance level, I fail to reject the null hypothesis. The model's F1 scores for high vs low urban population percentages are not significantly, indicating it performs equally well across different urban population percentages. 
