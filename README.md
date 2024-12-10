@@ -111,7 +111,7 @@ is clusted in the bottom left corner, but there are a notable amount of outliers
 
 ### Grouping and Aggregates
 
-I grouped by Climate Region and then performed an aggregate function mean() to see how severe outages are across different regions. I looked at Outage Duration, Customers Affected, and Demand Loss. The first few rows of this DataFrame are shown below:
+I grouped by Climate Region and then performed an aggregate function mean() to see how severe outages are across different regions. I looked at Outage Duration, Customers Affected, and Demand Loss. T
 
 | CLIMATE.REGION       | OUTAGE.DURATION   | CUSTOMERS.AFFECTED   | DEMAND.LOSS.MW   |
 |:---------------------|------------------:|---------------------:|-----------------:|
@@ -125,6 +125,7 @@ I grouped by Climate Region and then performed an aggregate function mean() to s
 | West                 | 1636.31          | 225303               | 717.932          |
 | West North Central   | 796.071          | 66242.4              | 391.2            |
 
+Regions like East North Central and the Northeast experience longer outages and higher demand loss, indicating areas where infrastructure improvements may be critical.
 
 Similarly, I looked to see how severity of outbreaks changed over time by grouping by year.
 
@@ -230,38 +231,37 @@ Using difference in means, I got an observed difference of 17966. This means in 
 
 My model aims to predict whether an outage was caused by severe weather. This is a binary classification task, focusing specifically on outages caused by severe weather or other reasons.
 
+At the time of prediction, we would only know the El Nino presence, the NERC region, the Climate Region, and the Total Customers in the Region. 
+
 I will evaluate my model using the F1 score because it balances precision and recall, making it an ideal metric when dealing with imbalanced classes or when both false positives and false negatives are important to minimize.
 
 # Baseline Model
 
 My model is a binary classifier designed to predict whether a major outage is caused by severe weather or other reason. This information helps companies decide whether to focus resources on improving infrastructure against severe weather. 
 
-The features used in the model are: ANOMALY.LEVEL (quantitative), NERC.REGION (nominal), CUSTOMERS.AFFECTED (quantitative), DEMAND.LOSS.MW (quantitative), CLIMATE.REGION (nominal), TOTAL.CUSTOMERS (quantitative), and OUTAGE.DURATION (quantitative). These features were chosen for the following reasons:
+The features used in the model are: ANOMALY.LEVEL (quantitative), NERC.REGION (nominal), CLIMATE.REGION (nominal), TOTAL.CUSTOMERS (quantitative). These features were chosen for the following reasons:
 
 ANOMALY.LEVEL: Indicates climate conditions that may lead to severe weather.
 NERC.REGION: Represents regional energy infrastructure and regulation.
-CUSTOMERS.AFFECTED: Reflects the scale of the outage's impact.
-DEMAND.LOSS.MW: Measures energy loss, which can vary by outage cause.
 CLIMATE.REGION: Provides geographical context tied to weather patterns.
-TOTAL.CUSTOMERS: Indicates the size of the population served in the region.
-OUTAGE.DURATION: Offers insight into the severity and response time of outages.
+TOTAL.CUSTOMERS: Indicates the size of the population served in the region..
 
 The target variable was encoded as 1 for severe weather and 0 for other causes.
 
-The model performed well, achieving an F1 score of 0.75 on the test set, highlighting its effectiveness in balancing precision and recall.
+The model performed okay, achieving an F1 score of 0.70 on the test set, highlighting it has some effectiveness in balancing precision and recall.
 
 # Final Model
 
 For my final model, I switched from Logistic Regression to a Random Forest Classifier. 
 
-Though I incorporated the same features, I also performed additional feature engineering. Specifically, I applied a StandardScaler to OUTAGE.DURATION to normalize its scale, ensuring that the range of values does not disproportionately affect the model. Additionally, I used a QuantileTransformer on DEMAND.LOSS.MW to handle its skewed distribution, making the data more uniform and less sensitive to outliers.
+Though I incorporated the same features, I also performed additional feature engineering. Specifically, I used weather definition to convert the ANOMALY.LEVEL column to a binary variable (1 or 0), indicating the occurence of El Nino or La Nina. Additionally, I used a Quantile Transformer on TOTAL.CUSTOMERS to handle its skewed distribution, making the data more uniform and less sensitive to outliers.
 
 I then used GridSearchCV to find the best hyperparameters for the Random Forest. These were:
     max_depth= None
     min_samples_split = 2
     n_estimators= 50 
 
-I evaluated my model's performance using the F1 score, achieving a value of 0.88. The increase in the F1 score from the baseline to the final model demonstrates improved performance in the final model.
+I evaluated my model's performance using the F1 score, achieving a value of 0.70. Unforuntely, there was no increase in performance from the baseline to the final model.
 
 
 # Fairness Analysis
@@ -276,4 +276,4 @@ My evaluation metric will be the F1 score since the classes (severe weather vs i
 
 **Alternative Hypothesis**: The model is unfair. Its F1 score for high urban population percentages is significantly different from the F1 score for low urban population percentages.
 
-I performed a permutation test with 5000 trials. My significance level is the standard 0.05, and I got a p-value of 0.8026. Because this is well above the significance level, I fail to reject the null hypothesis. The model's F1 scores for high vs low urban population percentages are not significantly, indicating it performs equally well across different urban population percentages. 
+I performed a permutation test with 5000 trials. My significance level is the standard 0.05, and I got a p-value of 0.8026. Because this is well above the significance level, I fail to reject the null hypothesis. The model's F1 scores for high vs low urban population percentages are not significantly different, indicating it performs equally well across different urban population percentages. 
