@@ -248,7 +248,7 @@ TOTAL.CUSTOMERS: Indicates the size of the population served in the region..
 
 The target variable was encoded as 1 for severe weather and 0 for other causes.
 
-The model performed okay, achieving an F1 score of 0.70 on the test set, highlighting it has some effectiveness in balancing precision and recall.
+The model performed okay, achieving an F1 score of 0.65 on the test set, highlighting it has some effectiveness in balancing precision and recall.
 
 # Final Model
 
@@ -261,7 +261,7 @@ I then used GridSearchCV to find the best hyperparameters for the Random Forest.
     min_samples_split = 2
     n_estimators= 50 
 
-I evaluated my model's performance using the F1 score, achieving a value of 0.70. Unforuntely, there was no increase in performance from the baseline to the final model.
+I evaluated my model's performance using the F1 score, achieving a value of 0.797. As there was a significant increase in F1 score, the model improved from the baseline. 
 
 
 # Fairness Analysis
