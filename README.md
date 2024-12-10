@@ -217,7 +217,7 @@ I will test whether more customers are affected by power outages during El Niño
 I performed a permutation test with 10,000 simulations in order to generate an empirical distribution of the test statistic under the null hypothesis..
 
 <iframe
-  src="assets/el_nino_diffmeans.html.html"
+  src="assets/el_nino_diffmeans.html"
   width="800"
   height="600"
   frameborder="0"
@@ -276,4 +276,4 @@ My evaluation metric will be the F1 score since the classes (severe weather vs i
 
 **Alternative Hypothesis**: The model is unfair. Its F1 score for high urban population percentages is significantly different from the F1 score for low urban population percentages.
 
-I performed a permutation test with 10,000 trials. My significance level is the standard 0.05, and I got a p-value of 0.8026. Because this is well above the significance level, I fail to reject the null hypothesis. The model's F1 scores for high vs low urban population percentages are not significantly, indicating it performs equally well across different urban population percentages. 
+I performed a permutation test with 5000 trials. My significance level is the standard 0.05, and I got a p-value of 0.8026. Because this is well above the significance level, I fail to reject the null hypothesis. The model's F1 scores for high vs low urban population percentages are not significantly, indicating it performs equally well across different urban population percentages. 
