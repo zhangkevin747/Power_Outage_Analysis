@@ -1,5 +1,5 @@
 # Analyzing Power Outages
-Project for Dsc 80 at UCSD
+Project for DSC 80 at UCSD
 
 By Kevin Zhang
 
@@ -111,6 +111,8 @@ is clusted in the bottom left corner, but there are a notable amount of outliers
 
 ### Grouping and Aggregates
 
+I grouped by Climate Region and then performed an aggregate function mean() to see how severe outages are across different regions. I looked at Outage Duration, Customers Affected, and Demand Loss. The first few rows of this DataFrame are shown below:
+
 | CLIMATE.REGION       | OUTAGE.DURATION   | CUSTOMERS.AFFECTED   | DEMAND.LOSS.MW   |
 |:---------------------|------------------:|---------------------:|-----------------:|
 | Central              | 2882.21          | 144269               | 574.362          |
@@ -123,6 +125,8 @@ is clusted in the bottom left corner, but there are a notable amount of outliers
 | West                 | 1636.31          | 225303               | 717.932          |
 | West North Central   | 796.071          | 66242.4              | 391.2            |
 
+
+Similarly, I looked to see how severity of outbreaks changed over time by grouping by year.
 
 
 |    |   YEAR |   OUTAGE.DURATION (mean) |   OUTAGE.DURATION (count) |   DEMAND.LOSS.MW (mean) |   DEMAND.LOSS.MW (sum) |   CUSTOMERS.AFFECTED (mean) |   CUSTOMERS.AFFECTED (sum) |
@@ -148,22 +152,57 @@ is clusted in the bottom left corner, but there are a notable amount of outliers
 
 # Assessment of Missingness
 
+
+
 ## NMAR Analysis
+
+Several columns in the dataset contain missing data, and one that is likely not missing at random (NMAR) is CUSTOMERS.AFFECTED. This could occur because missingness depends on the number of customers affected. For instance, if the outage impacts a very small number of customers, it might not be reported due to perceived irrelevance or because it falls below a reporting threshold.
+
+To determine if CUSTOMERS.AFFECTED is NMAR, additional data could be collected on local utility companies' reporting practices, specifically their policies for reporting small-scale outages and thresholds for recording customer impacts.
 
 ## Missingness Dependency
 
-### 
+To test missingness dependency, I will focus on the distribution of OUTAGE.DURATION. I will test this against the columns TOTAL.CUSTOMERS and MONTH using permutation testing. 
+
+### Total Customers
+
+**Null Hypothesis:** The distribution of Outage Duration is the same when Total Customers is missing vs not missing.
+
+**Alternate Hypothesis:** The distribution of Outage Duration is different when Total Customers is missing vs not missing. 
+
+I graphed the two distributions below. 
+
+<iframe
+  src="assets/kde_customers.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+ I found an observed KS of 0.26 which has a p value of 0.0. The distribution of the KS statistics is shown below. At this value, I reject the null hypothesis in favor of the alternate hypothesis, which is that the distribution of Total Customers is significantly different when Duration is missing vs not, indicating that the missingness of Duration is dependent on Total Customers
+ 
+ <iframe
+  src="assets/duration_customers_ks.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 
-**Null Hypothesis:** 
+### MONTH
 
-**Alternate Hypothesis:** 
+**Null Hypothesis:** The distribution of Month is the same when Duration is missing vs not missing.
 
-### 
+**Alternate Hypothesis:** The distribution of Month is different when Duration is missing vs not missing.
 
-**Null Hypothesis:** 
+ I found an observed TVD of 0.14 which has a p value of 0.201. The distribution of the TVDs are shown below. At this value, I fail to reject the null hypothesis.
 
-**Alternate Hypothesis:**  
+  <iframe
+  src="assets/duration_month_tvd.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 # Hypothesis Testing
 
