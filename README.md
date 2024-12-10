@@ -57,10 +57,94 @@ The head of the cleaned dataframe (with column subset) is as follows.
 
 ### Univariate Analysis
 
+To begin my EDA, I first perform univariate analysis to examine the distribution of single variables. 
+
+First, I wanted to see the distribution of outage durations. 
+
+<iframe
+  src="assets/outage_duration.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+I also looked at the major causes of outages
+
+<iframe
+  src="assets/major_causes.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Then, I created a map in Folium to visualize the occurences of power outage by state
+<iframe
+  src="assets/map1.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 
 ### Bivariate Analysis
 
+I also conducted a couple bivariate analyses.
+
+I examined the relationship between Outage Duration and Climate Region. I expected regions prone to extreme weather, such as hurricanes or snowstorms, to have longer outages due to greater infrastructure damage. Conversely, regions with milder climates or higher urbanization might experience shorter outages due to fewer severe events and quicker restoration efforts.
+
+<iframe
+  src="assets/climte_region_duration.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The plot below shows the relation between outage duration and customers affected. Most of the data 
+is clusted in the bottom left corner, but there are a notable amount of outliers. 
+<iframe
+  src="assets/customers_affected_duration.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
 ### Grouping and Aggregates
+
+| CLIMATE.REGION       | OUTAGE.DURATION   | CUSTOMERS.AFFECTED   | DEMAND.LOSS.MW   |
+|:---------------------|------------------:|---------------------:|-----------------:|
+| Central              | 2882.21          | 144269               | 574.362          |
+| East North Central   | 5391.4           | 149816               | 633.902          |
+| Northeast            | 3330.52          | 175359               | 981.359          |
+| Northwest            | 1536.36          | 148472               | 343.933          |
+| South                | 2872.45          | 206106               | 471.648          |
+| Southeast            | 2247.66          | 198593               | 852.358          |
+| Southwest            | 1621.41          | 87815.1              | 909.762          |
+| West                 | 1636.31          | 225303               | 717.932          |
+| West North Central   | 796.071          | 66242.4              | 391.2            |
+
+
+
+|    |   YEAR |   OUTAGE.DURATION (mean) |   OUTAGE.DURATION (count) |   DEMAND.LOSS.MW (mean) |   DEMAND.LOSS.MW (sum) |   CUSTOMERS.AFFECTED (mean) |   CUSTOMERS.AFFECTED (sum) |
+|----|--------|---------------------------|----------------------------|-------------------------|------------------------|-----------------------------|----------------------------|
+|  0 |   2000 |                   3080    |                         12 |                295.786  |                 4141   |                    203361   |               4.27058e+06 |
+|  1 |   2001 |                   1272.07 |                         14 |                390.556  |                 3515   |                    178926   |               1.43141e+06 |
+|  2 |   2002 |                   4751    |                         14 |                228.333  |                 2740   |                    425506   |               6.38259e+06 |
+|  3 |   2003 |                   4652.43 |                         46 |               1987.95   |                79518   |                    303978   |               1.24631e+07 |
+|  4 |   2004 |                   4368.79 |                         71 |                895.161  |                55500   |                    222829   |               1.35926e+07 |
+|  5 |   2005 |                   5288.94 |                         54 |                739.324  |                27355   |                    301157   |               1.35521e+07 |
+|  6 |   2006 |                   3329.53 |                         66 |                347.571  |                17031   |                    178107   |               1.01521e+07 |
+|  7 |   2007 |                   2336.67 |                         54 |                321.176  |                10920   |                    149336   |               5.97343e+06 |
+|  8 |   2008 |                   4184.02 |                        110 |                473.629  |                33154   |                    212393   |               1.99649e+07 |
+|  9 |   2009 |                   3660.52 |                         77 |                277.5    |                12765   |                    133598   |               6.81348e+06 |
+| 10 |   2010 |                   2965.5  |                        105 |                345.711  |                15557   |                    136596   |               1.01081e+07 |
+| 11 |   2011 |                   2192.9  |                        221 |                594.268  |                42193   |                    134743   |               1.64387e+07 |
+| 12 |   2012 |                   2123.46 |                        153 |                578      |                20230   |                    171675   |               1.2704e+07  |
+| 13 |   2013 |                   1415.73 |                        147 |                630.649  |                23334   |                    104752   |               7.0184e+06  |
+| 14 |   2014 |                   3168.28 |                        102 |               1897.13   |                43634   |                    258781   |               8.0222e+06  |
+| 15 |   2015 |                    935.811|                        106 |               1322.92   |                50271   |                     95410.4 |               5.62921e+06 |
+| 16 |   2016 |                   2273.93 |                         46 |                247.636  |                 2724   |                    104943   |               1.99391e+06 |
+
 
 # Assessment of Missingness
 
