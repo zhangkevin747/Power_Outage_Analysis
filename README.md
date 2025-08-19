@@ -3,6 +3,8 @@ Project for DSC 80 at UCSD
 
 By Kevin Zhang
 
+Check out the fully formatted project website here: https://zhangkevin747.github.io/Power_Outage_Analysis/
+
 # Introduction
 
 This project analyzes a dataset of major power outages in the U.S. from January 2000 to July 2016, accessed from Purdue University's Laboratory for Advancing Sustainable Critical Infrastructure. Major outages, as defined by the Department of Energy, are those affecting at least 50,000 customers or resulting in an unplanned energy demand loss of at least 300 MW. The dataset includes details on outages, geographic and climatic factors, land-use characteristics, electricity consumption patterns, and the economic attributes of affected states.
